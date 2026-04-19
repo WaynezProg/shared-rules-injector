@@ -1,0 +1,36 @@
+{
+  "id": "shared-rules-injector",
+  "name": "Shared Rules Injector",
+  "version": "1.0.0",
+  "description": "Injects a single shared markdown file into the agent system prompt on every turn via the `before_prompt_build` hook. Replaces the pattern of duplicating identical rule blocks across every AGENTS.md. The injection uses `appendSystemContext` so providers can cache it.",
+  "entry": "./index.js",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "file": {
+        "type": "string",
+        "description": "Path to the shared rules markdown file, relative to workspaceRoot (or absolute). Default 'shared/core-rules.md'."
+      },
+      "skipAgents": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Agent IDs to exclude from injection."
+      },
+      "onlyAgents": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "If set, only inject for these agent IDs. Mutually exclusive with skipAgents (onlyAgents takes precedence)."
+      },
+      "mode": {
+        "type": "string",
+        "enum": ["everyTurn", "firstTurn"],
+        "description": "'everyTurn' injects on every before_prompt_build call (default, cached). 'firstTurn' injects only when the session has no prior messages."
+      },
+      "workspaceRoot": {
+        "type": "string",
+        "description": "Absolute path to workspace root. Only needed if the host does not supply one."
+      }
+    },
+    "additionalProperties": false
+  }
+}
