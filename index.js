@@ -25,11 +25,15 @@ module.exports = __toCommonJS(index_exports);
 var import_fs = require("fs");
 var import_path = require("path");
 var DEFAULT_FILE = "shared/core-rules.md";
+function pluginDebugEnabled() {
+  const value = process.env.OPENCLAW_PLUGIN_DEBUG || process.env.OPENCLAW_DEBUG_PLUGINS || "";
+  return /^(1|true|yes)$/i.test(value);
+}
 function log(msg) {
-  console.log(`[shared-rules-injector] ${msg}`);
+  if (pluginDebugEnabled()) console.error(`[shared-rules-injector] ${msg}`);
 }
 function warn(msg) {
-  console.log(`[shared-rules-injector] WARN: ${msg}`);
+  console.warn(`[shared-rules-injector] WARN: ${msg}`);
 }
 function resolveOpenClawDefaultWorkspaceRoot() {
   const env = process.env;

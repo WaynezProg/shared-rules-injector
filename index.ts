@@ -58,11 +58,16 @@ const DEFAULT_FILE = "shared/core-rules.md";
 // Helpers
 // ---------------------------------------------------------------------------
 
+function pluginDebugEnabled(): boolean {
+  const value = process.env.OPENCLAW_PLUGIN_DEBUG || process.env.OPENCLAW_DEBUG_PLUGINS || "";
+  return /^(1|true|yes)$/i.test(value);
+}
+
 function log(msg: string): void {
-  console.log(`[shared-rules-injector] ${msg}`);
+  if (pluginDebugEnabled()) console.error(`[shared-rules-injector] ${msg}`);
 }
 function warn(msg: string): void {
-  console.log(`[shared-rules-injector] WARN: ${msg}`);
+  console.warn(`[shared-rules-injector] WARN: ${msg}`);
 }
 
 function resolveOpenClawDefaultWorkspaceRoot(): string | null {
