@@ -1,5 +1,8 @@
 {
   "id": "shared-rules-injector",
+  "activation": {
+    "onStartup": true
+  },
   "name": "Shared Rules Injector",
   "version": "1.0.0",
   "description": "Injects a single shared markdown file into the agent system prompt on every turn via the `before_prompt_build` hook. Replaces the pattern of duplicating identical rule blocks across every AGENTS.md. The injection uses `appendSystemContext` so providers can cache it.",
